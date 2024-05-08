@@ -4,8 +4,10 @@
 # directory for HDL files (for coverage)
 export HDL_DIR = $(shell git rev-parse --show-toplevel)/src/hdl
 
-# If this is running in the University of Washington ECE labs, setup for the EE478 workflow
+# set simulation dir
+export sim = $(shell git rev-parse --show-toplevel)/tools/sim
 
+# If this is running in the University of Washington ECE labs, setup for the EE478 workflow
 ifneq ($(findstring ece.uw.edu, $(shell hostname)),)
 
 	# Cadenv Include
@@ -47,9 +49,6 @@ export BASEJUMP_STL_DIR = $(shell git rev-parse --show-toplevel)/basejump_stl
 
 # simulator path
 export SIM_BUILD = $(shell git rev-parse --show-toplevel)/tools/sim_build
-
-# set simulation dir
-export sim = $(shell git rev-parse --show-toplevel)/tools/sim
 
 # basejump_stl verilog header include path
 EXTRA_ARGS += +incdir+$(BASEJUMP_STL_DIR)/bsg_misc

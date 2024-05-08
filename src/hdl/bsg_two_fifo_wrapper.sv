@@ -35,9 +35,9 @@ module bsg_two_fifo_wrapper #(parameter width_p = 16
     (.*
     );
 
-    // Dump Waveforms
+    // Dump Waveforms, comment out if is not running using VCS
     initial begin
-        // $fsdbDumpvars;
+        $fsdbDumpvars;
     end
 
 endmodule

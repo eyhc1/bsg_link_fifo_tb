@@ -11,6 +11,7 @@ novas.conf
 novas.rc
 *.pyc
 *.jou
+*.fsdb
 
 # ---> ModelSim
 # ignore ModelSim generated files and directories (temp files and so on)
@@ -41,3 +42,5 @@ vsim.dbg
 *.ini
 results.xml
 sim_build
+ucli.key
+vcdplus.vpd
