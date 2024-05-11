@@ -34,6 +34,9 @@ else
 	# If is non-UW ECE lab environment, use custom/other simulator (e.g. ModelSim)
 	SIM ?= modelsim
 
+	QUESTASIM_BIN = $(shell which questasim)/../
+	export PATH:=$(QUESTASIM_BIN):$(PATH)
+
 	# ModelSim/QuestaSim Arguments
 	EXTRA_ARGS += -l $(shell git rev-parse --show-toplevel)/tools/sim/$(shell date +"%Y%m%d%H%M%S").log
 endif
@@ -110,5 +113,8 @@ st-clean: clean
 	rm -rf __pycache__
 	rm -rf results.xml
 	rm -rf *.log
+
+test:
+	ls $(shell which modelsim)/../
 
 
