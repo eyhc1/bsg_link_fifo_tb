@@ -75,27 +75,28 @@ module bsg_two_fifo_cov
     cp_tail: coverpoint tail_r;
 
     cross_all: cross cp_v, cp_yumi, cp_head, cp_tail {
-      
+      // by definition, a fifo in normal operation means that head and tail are not at the same location
+      illegal_bins ig0 = cross_all with (cp_head == cp_tail);
     }
   endgroup
 
   // create cover groups
-  cg_reset cov_reset = new;
-  cg_empty cov_empty = new;
-  cg_full  cov_full = new;
-//   cg_normal cg_op = new;
+  cg_reset  cov_reset = new;
+  cg_empty  cov_empty = new;
+  cg_full   cov_full  = new;
+  cg_op     cov_op    = new;
 
   // print coverages when simulation is done
   final
   begin
     $display("");
     $display("Instance: %m");
-    $display("---------------------- Functional Coverage Results ----------------------");
-    $display("Reset       functional coverage is %f%%", cov_reset.get_coverage());
-    $display("Fifo empty  functional coverage is %f%%", cov_empty.cross_all.get_coverage());
-    $display("Fifo full   functional coverage is %f%%", cov_full.cross_all.get_coverage());
-    // $display("Fifo normal functional coverage is %f%%", cg_op.cross_all.get_coverage());
-    $display("-------------------------------------------------------------------------");
+    $display("------------------------- Functional Coverage Results -------------------------");
+    $display("Reset            functional coverage is %f%%", cov_reset.get_coverage());
+    $display("Fifo empty       functional coverage is %f%%", cov_empty.cross_all.get_coverage());
+    $display("Fifo full        functional coverage is %f%%", cov_full.cross_all.get_coverage());
+    $display("Fifo operational functional coverage is %f%%", cov_op.cross_all.get_coverage());
+    $display("-------------------------------------------------------------------------------");
     $display("");
   end
 
