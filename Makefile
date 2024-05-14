@@ -114,7 +114,4 @@ st-clean: clean
 	rm -rf results.xml
 	rm -rf *.log
 
-test:
-	ls $(shell which modelsim)/../
-
 
