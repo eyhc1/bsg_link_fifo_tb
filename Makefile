@@ -4,6 +4,15 @@
 # directory for HDL files (for coverage)
 export HDL_DIR = $(shell git rev-parse --show-toplevel)/src/hdl
 
+#  Python testbench path
+export PYTHONPATH := $(shell git rev-parse --show-toplevel)/src/python
+
+# basejump_stl path
+export BASEJUMP_STL_DIR = $(shell git rev-parse --show-toplevel)/basejump_stl
+
+# simulator path
+export SIM_BUILD = $(shell git rev-parse --show-toplevel)/tools/sim_build
+
 # set simulation dir
 export sim = $(shell git rev-parse --show-toplevel)/tools/sim
 
@@ -20,7 +29,7 @@ ifneq ($(findstring ece.uw.edu, $(shell hostname)),)
 	export PATH:=$(PATH):$(VCS_BIN):$(VERDI_BIN)
 
 	# VCS Arguments
-	EXTRA_ARGS += +v2k -l $(shell git rev-parse --show-toplevel)/tools/sim/vcs.log
+	EXTRA_ARGS += +v2k -l vcs.log
 	EXTRA_ARGS += -debug_pp +vcs+vcdpluson
 	EXTRA_ARGS += +lint=all,noSVA-UA,noSVA-NSVU,noVCDE,noNS -assert svaext
 	EXTRA_ARGS += -cm line+fsm+branch+cond+tgl
@@ -38,20 +47,11 @@ else
 	export PATH:=$(QUESTASIM_BIN):$(PATH)
 
 	# ModelSim/QuestaSim Arguments
-	EXTRA_ARGS += -l $(shell git rev-parse --show-toplevel)/tools/sim/$(shell date +"%Y%m%d%H%M%S").log
+	EXTRA_ARGS += -l $(shell git rev-parse --show-toplevel)/$(shell date +"%Y%m%d%H%M%S").log
 endif
 
 WAVES = 1
 TOPLEVEL_LANG ?= verilog
-
-#  Python testbench path
-export PYTHONPATH := $(shell git rev-parse --show-toplevel)/src/python
-
-# basejump_stl path
-export BASEJUMP_STL_DIR = $(shell git rev-parse --show-toplevel)/basejump_stl
-
-# simulator path
-export SIM_BUILD = $(shell git rev-parse --show-toplevel)/tools/sim_build
 
 # basejump_stl verilog header include path
 EXTRA_ARGS += +incdir+$(BASEJUMP_STL_DIR)/bsg_misc
@@ -83,7 +83,7 @@ ee-verdi:
 
 # VERDI open coverages
 ee-verdi-cov:
-	verdi -cov -covdir tools/sim/simv.vdb &
+	verdi -cov -covdir $(SIM_BUILD)/simv.vdb &
 
 # **DEPRECATED** DVE open waveform
 ee-dve:
@@ -91,12 +91,11 @@ ee-dve:
 
 # **DEPRECATED** DVE open coverages
 ee-dve-cov:
-	dve -full64 -cov -covdir tools/sim/simv.vdb &
+	dve -full64 -cov -covdir $(SIM_BUILD)/simv.vdb &
 
 # Clean simulation files
 ee-clean:
 	make clean
-	cd tools/sim
 	rm -rf __pycache__ DVEfiles *.log vcdplus.vpd results.xml
 	rm -rf verdiLog vdCovLog novas.conf novas.fsdb novas.rc novas_dump.log
 
