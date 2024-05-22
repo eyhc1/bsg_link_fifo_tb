@@ -4,9 +4,6 @@
 # directory for HDL files (for coverage)
 export HDL_DIR = $(shell git rev-parse --show-toplevel)/src/hdl
 
-#  Python testbench path
-export PYTHONPATH := $(shell git rev-parse --show-toplevel)/src/python
-
 # basejump_stl path
 export BASEJUMP_STL_DIR = $(shell git rev-parse --show-toplevel)/basejump_stl
 
@@ -15,6 +12,13 @@ export SIM_BUILD = $(shell git rev-parse --show-toplevel)/tools/sim_build
 
 # set simulation dir
 export sim = $(shell git rev-parse --show-toplevel)/tools/sim
+
+# # comment out above and uncomment below for 478 settings
+# export BASEJUMP_STL_DIR = $(shell git rev-parse --show-toplevel)/../basejump_stl
+# export HDL_DIR = $(PWD)/hdl
+
+#  Python testbench path
+export PYTHONPATH := $(HDL_DIR)/../python
 
 # If this is running in the University of Washington ECE labs, setup for the EE478 workflow
 ifneq ($(findstring ece.uw.edu, $(shell hostname)),)
