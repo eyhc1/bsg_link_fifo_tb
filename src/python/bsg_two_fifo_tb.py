@@ -13,7 +13,7 @@ from cocotb.triggers import RisingEdge, FallingEdge, Timer
 WIDTH_P = 16
 
 # Testbench iterations
-ITERATION = 350
+ITERATION = 50000
 
 # Flow control random seed
 # Use different seeds on input and output sides for more randomness
@@ -55,7 +55,9 @@ async def input_side_testbench(dut, seed):
             # Check DUT ready signal
             if dut.ready_param_o == 1:
                 # Generate send data
-                dut.data_i.setimmediatevalue(math.floor(data_random.random()*pow(2, WIDTH_P)))
+                immdata = math.floor(data_random.random()*pow(2, WIDTH_P))
+                dut.data_i.setimmediatevalue(immdata)
+                dut._log.debug("Send: %s", immdata)
                 # iteration increment
                 i += 1
                 # Check iteration
@@ -97,6 +99,7 @@ async def output_side_testbench(dut, seed):
         if dut.v_o.value == 1 and control_random.random() >= 0.5:
             # Assert DUT yumi signal
             dut.yumi_i.setimmediatevalue(1)
+            dut._log.debug("Recieve: %s", dut.data_o.value)
             # Generate check data and compare with receive data
             assert dut.data_o.value == math.floor(data_random.random()*pow(2, WIDTH_P)), "data mismatch!"
             # iteration increment

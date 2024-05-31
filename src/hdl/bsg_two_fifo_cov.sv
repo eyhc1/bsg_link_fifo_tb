@@ -2,18 +2,11 @@
 // Eric Yu   05/2024
 //
 // This module defines functional coverages of module bsg_two_fifo
-//
-//
-// TODO: currently this module copies the covergroups from bsg_fifo_1r1w_small_hardened_cov. 
-// Need to define all the other covergroups for bsg_two_fifo
+
 
 `include "bsg_defines.sv"
 
 module bsg_two_fifo_cov
-// TODO: in the example, there's a ,localparam ptr_width_lp = `BSG_SAFE_CLOG2(els_p). dunno what is it and if we need similar thing
-//  #(parameter width_p = 16
-//   )
-
   (input clk_i
   ,input reset_i
 
@@ -22,9 +15,9 @@ module bsg_two_fifo_cov
   ,input yumi_i
 
   // internal registers
-  ,input head_r   // registered in sub-module bsg_mem_1r1w
-  ,input tail_r   // registered in sub-module bsg_mem_1r1w
-  ,input empty_r  // registered in sub-module bsg_mem_1r1w
+  ,input head_r
+  ,input tail_r
+  ,input empty_r
   ,input full_r
   );
 

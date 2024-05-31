@@ -29,8 +29,6 @@ module bsg_two_fifo_wrapper #(parameter width_p = 16
 
     // Bind Covergroups
     bind bsg_two_fifo bsg_two_fifo_cov
-//    #(.els_p(els_p)
-//     ) pc_cov
     pc_cov
     (.*
     );
